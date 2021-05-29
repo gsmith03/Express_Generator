@@ -6,7 +6,7 @@ const authenticate = require('../authenticate');
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', authenticate.verifyAdmin, function(req, res, next) {
   res.send('respond with a resource');
 });
 
@@ -31,7 +31,7 @@ router.post('/signup', (req, res) => {
                     res.statusCode = 500;
                     res.setHeader('Content-Type', 'application/json');
                     res.json({err: err});
-                    return;
+                    return
                   }
                     passport.authenticate('local')(req, res, () => {
                         res.statusCode = 200;
